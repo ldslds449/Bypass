@@ -15,4 +15,5 @@ RUN git clone https://github.com/ldslds449/Bypass
 WORKDIR /app/Bypass
 RUN pip install -r requirements.txt
 
-CMD ["python3", "/app/Bypass/bypass.py", "--port", "${PORT}", "--bypass-ip", "${BYPASS_IP}", "--bypass-port", "${BYPASS_PORT}"]
+EXPOSE $PORT
+CMD python3 /app/Bypass/bypass.py --hostname 0.0.0.0 --port $PORT --bypass-ip $BYPASS_IP --bypass-port $BYPASS_PORT

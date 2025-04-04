@@ -27,10 +27,10 @@ class CustomPlugin(HttpProxyBasePlugin):
         self, uid, flag, client, event_queue, upstream_conn_pool=None
     ):
         super().__init__(uid, flag, client, event_queue, upstream_conn_pool)
-        self.bypass_ip = flag.bypass_ip
-        self.bypass_port = flag.bypass_port
-        logger.info("Connect IP: %s", flag.bypass_ip)
-        logger.info("Connect Port: %d", flag.bypass_port)
+        self.bypass_ip: str = flag.bypass_ip
+        self.bypass_port: int = flag.bypass_port
+        logger.info("Connect IP: %s", self.bypass_ip)
+        logger.info("Connect Port: %d", self.bypass_port)
 
     def __is_bypass_host(self, host: bytes, port: int):
         return host == self.bypass_ip.encode() and port == self.bypass_port
@@ -55,7 +55,7 @@ class CustomPlugin(HttpProxyBasePlugin):
             path = SLASH if not request.path else request.path
 
             new_request = (
-                b"http://"
+                b"https://"
                 + self.bypass_ip.encode()
                 + COLON
                 + str(self.bypass_port).encode()
